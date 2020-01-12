@@ -3,15 +3,19 @@
 // Listen to "click" event.
 var numberOfDrumButtons = document.querySelectorAll(".drum").length;
 for (var i = 0; i < numberOfDrumButtons; i++) {
+
+  // Add event listener to every .drum class and listen for "click" event.
   document.querySelectorAll(".drum")[i].addEventListener("click", function() {
     var buttonInnerHTML = this.innerHTML;
     makeSound(buttonInnerHTML);
+    buttonAnimation(buttonInnerHTML);
   });
 }
 
 // Listen to "keydown" event.
 document.addEventListener("keydown", function(event) {
   makeSound(event.key);
+  buttonAnimation(event.key);
 });
 
 // Make sounds according to "click" and "keydown" event.
@@ -61,5 +65,19 @@ function makeSound(key) {
 
     default:
       console.log(key);
-    }
+  }
+}
+
+function buttonAnimation(currentKey) {
+
+  // Choose the class of button: w, a, s, d, j, k, l.
+  var activeButton = document.querySelector("." + currentKey);
+
+  // Add CSS effect.
+  activeButton.classList.add("pressed");
+
+  // Delay 100ms then remove the .pressed CSS class.
+  setTimeout(function() {
+    activeButton.classList.remove("pressed");
+  }, 100);
 }
